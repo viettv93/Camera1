@@ -1,0 +1,22 @@
+{
+    "sourceFile": "index.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1645344041055,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1645344717833,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,8 @@\n  * @format\n  */\n \n import {AppRegistry} from 'react-native';\n-import Entry from './Entry';\n+import CameraView from './CameraView';\n import {name as appName} from './app.json';\n \n-AppRegistry.registerComponent(appName, () => Entry);\n+AppRegistry.registerComponent(appName, () => CameraView);\n"
+                }
+            ],
+            "date": 1645344041055,
+            "name": "Commit-0",
+            "content": "/**\n * @format\n */\n\nimport {AppRegistry} from 'react-native';\nimport Entry from './Entry';\nimport {name as appName} from './app.json';\n\nAppRegistry.registerComponent(appName, () => Entry);\n"
+        }
+    ]
+}

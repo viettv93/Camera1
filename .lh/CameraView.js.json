@@ -1,0 +1,158 @@
+{
+    "sourceFile": "CameraView.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 35,
+            "patches": [
+                {
+                    "date": 1645344056004,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1645344184669,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n import React, { useRef } from \"react\"\n-import { Text, TouchableOpacity, View, StyleSheet } from \"react-native\"\n+import { Text, TouchableOpacity, View, StyleSheet, Modal } from \"react-native\"\n import { RNCamera } from 'react-native-camera';\n \n const CameraView = () => {\n \n@@ -14,9 +14,9 @@\n     }\n   };\n \n   return (\n-    <View style={styles.container}>\n+    <Modal style={styles.container}>\n       <RNCamera\n         ref={camera}\n         style={styles.preview}\n         type={RNCamera.Constants.Type.back}\n@@ -38,9 +38,9 @@\n         <TouchableOpacity onPress={takePicture} style={styles.capture}>\n           <Text style={{ fontSize: 14 }}> SNAP </Text>\n         </TouchableOpacity>\n       </View>\n-    </View>\n+    </Modal>\n   )\n }\n const styles = StyleSheet.create({\n   container: {\n"
+                },
+                {
+                    "date": 1645344207107,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,8 @@\n import { Text, TouchableOpacity, View, StyleSheet, Modal } from \"react-native\"\n import { RNCamera } from 'react-native-camera';\n \n const CameraView = () => {\n-\n   const camera = useRef(null);\n \n   const takePicture = async () => {\n     if (camera) {\n"
+                },
+                {
+                    "date": 1645344224441,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n import React, { useRef } from \"react\"\n import { Text, TouchableOpacity, View, StyleSheet, Modal } from \"react-native\"\n import { RNCamera } from 'react-native-camera';\n \n-const CameraView = () => {\n+const CameraView = (props) => {\n   const camera = useRef(null);\n \n   const takePicture = async () => {\n     if (camera) {\n"
+                },
+                {
+                    "date": 1645344298883,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,19 +1,28 @@\n-import React, { useRef } from \"react\"\n+import React, { useRef, useState } from \"react\"\n import { Text, TouchableOpacity, View, StyleSheet, Modal } from \"react-native\"\n import { RNCamera } from 'react-native-camera';\n \n const CameraView = (props) => {\n   const camera = useRef(null);\n-\n+  const [visible, setVisible] = useState(false)\n+  \n   const takePicture = async () => {\n     if (camera) {\n       const options = { quality: 0.5, base64: true };\n       const data = await camera.takePictureAsync(options);\n       console.log(data.uri);\n     }\n   };\n \n+  const showCamera = () => {\n+    setVisible(true)\n+  }\n+\n+  const hideCamera = () => {\n+    setVisible(false)\n+  }\n+\n   return (\n     <Modal style={styles.container}>\n       <RNCamera\n         ref={camera}\n"
+                },
+                {
+                    "date": 1645344478416,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,26 +3,16 @@\n import { RNCamera } from 'react-native-camera';\n \n const CameraView = (props) => {\n   const camera = useRef(null);\n-  const [visible, setVisible] = useState(false)\n-  \n   const takePicture = async () => {\n     if (camera) {\n       const options = { quality: 0.5, base64: true };\n       const data = await camera.takePictureAsync(options);\n       console.log(data.uri);\n     }\n   };\n \n-  const showCamera = () => {\n-    setVisible(true)\n-  }\n-\n-  const hideCamera = () => {\n-    setVisible(false)\n-  }\n-\n   return (\n     <Modal style={styles.container}>\n       <RNCamera\n         ref={camera}\n"
+                },
+                {
+                    "date": 1645344512541,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,9 @@\n   )\n }\n const styles = StyleSheet.create({\n   container: {\n-    flex: 1,\n+    height: '90%',\n     flexDirection: 'column',\n     backgroundColor: 'black',\n   },\n   preview: {\n"
+                },
+                {
+                    "date": 1645344529087,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,9 +46,9 @@\n     flexDirection: 'column',\n     backgroundColor: 'black',\n   },\n   preview: {\n-    flex: 1,\n+    height: '90%',\n     justifyContent: 'flex-end',\n     alignItems: 'center',\n   },\n   capture: {\n"
+                },
+                {
+                    "date": 1645344565957,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,14 +41,14 @@\n   )\n }\n const styles = StyleSheet.create({\n   container: {\n-    height: '90%',\n+    flex: 1,\n     flexDirection: 'column',\n     backgroundColor: 'black',\n   },\n   preview: {\n-    height: '90%',\n+    flex: 1,\n     justifyContent: 'flex-end',\n     alignItems: 'center',\n   },\n   capture: {\n"
+                },
+                {
+                    "date": 1645344721174,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,9 @@\n import { Text, TouchableOpacity, View, StyleSheet, Modal } from \"react-native\"\n import { RNCamera } from 'react-native-camera';\n \n const CameraView = (props) => {\n+  const [visible, setVisible] = useState(false);\n   const camera = useRef(null);\n   const takePicture = async () => {\n     if (camera) {\n       const options = { quality: 0.5, base64: true };\n@@ -12,33 +13,49 @@\n     }\n   };\n \n   return (\n-    <Modal style={styles.container}>\n-      <RNCamera\n-        ref={camera}\n-        style={styles.preview}\n-        type={RNCamera.Constants.Type.back}\n-        flashMode={RNCamera.Constants.FlashMode.off}\n-        androidCameraPermissionOptions={{\n-          title: 'Permission to use camera',\n-          message: 'We need your permission to use your camera',\n-          buttonPositive: 'Ok',\n-          buttonNegative: 'Cancel',\n-        }}\n-        androidRecordAudioPermissionOptions={{\n-          title: 'Permission to use audio recording',\n-          message: 'We need your permission to use your audio',\n-          buttonPositive: 'Ok',\n-          buttonNegative: 'Cancel',\n-        }}\n-      />\n+    <View style={styles.container}>\n+      {visible && (\n+        <RNCamera\n+          ref={camera}\n+          style={styles.preview}\n+          type={RNCamera.Constants.Type.back}\n+          flashMode={RNCamera.Constants.FlashMode.off}\n+          androidCameraPermissionOptions={{\n+            title: 'Permission to use camera',\n+            message: 'We need your permission to use your camera',\n+            buttonPositive: 'Ok',\n+            buttonNegative: 'Cancel',\n+          }}\n+          androidRecordAudioPermissionOptions={{\n+            title: 'Permission to use audio recording',\n+            message: 'We need your permission to use your audio',\n+            buttonPositive: 'Ok',\n+            buttonNegative: 'Cancel',\n+          }}\n+        />\n+      )}\n       <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>\n-        <TouchableOpacity onPress={takePicture} style={styles.capture}>\n-          <Text style={{ fontSize: 14 }}> SNAP </Text>\n-        </TouchableOpacity>\n+        {visible && (\n+          <TouchableOpacity onPress={takePicture} style={styles.capture}>\n+            <Text style={{ fontSize: 14 }}> SNAP </Text>\n+          </TouchableOpacity>\n+        )}\n+\n+        {!visible && (\n+          <TouchableOpacity onPress={takePicture} style={styles.capture}>\n+            <Text style={{ fontSize: 14 }}> Take a picture </Text>\n+          </TouchableOpacity>\n+        )}\n+\n+\n+\n       </View>\n-    </Modal>\n+\n+\n+\n+    </View>\n   )\n }\n const styles = StyleSheet.create({\n   container: {\n"
+                },
+                {
+                    "date": 1645344735349,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -60,9 +60,9 @@\n const styles = StyleSheet.create({\n   container: {\n     flex: 1,\n     flexDirection: 'column',\n-    backgroundColor: 'black',\n+    backgroundColor: 'green',\n   },\n   preview: {\n     flex: 1,\n     justifyContent: 'flex-end',\n"
+                },
+                {
+                    "date": 1645344746693,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,11 +46,8 @@\n           <TouchableOpacity onPress={takePicture} style={styles.capture}>\n             <Text style={{ fontSize: 14 }}> Take a picture </Text>\n           </TouchableOpacity>\n         )}\n-\n-\n-\n       </View>\n \n \n \n"
+                },
+                {
+                    "date": 1645344775444,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,9 @@\n           </TouchableOpacity>\n         )}\n \n         {!visible && (\n-          <TouchableOpacity onPress={takePicture} style={styles.capture}>\n+          <TouchableOpacity onPress={() => setVisible(true)} style={styles.capture}>\n             <Text style={{ fontSize: 14 }}> Take a picture </Text>\n           </TouchableOpacity>\n         )}\n       </View>\n"
+                },
+                {
+                    "date": 1645344841081,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,8 +10,10 @@\n       const options = { quality: 0.5, base64: true };\n       const data = await camera.takePictureAsync(options);\n       console.log(data.uri);\n     }\n+\n+    setVisible(false)\n   };\n \n   return (\n     <View style={styles.container}>\n"
+                },
+                {
+                    "date": 1645344902298,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n import React, { useRef, useState } from \"react\"\n-import { Text, TouchableOpacity, View, StyleSheet, Modal } from \"react-native\"\n+import { Text, TouchableOpacity, View, StyleSheet, Modal, Image } from \"react-native\"\n import { RNCamera } from 'react-native-camera';\n \n const CameraView = (props) => {\n   const [visible, setVisible] = useState(false);\n@@ -36,8 +36,15 @@\n             buttonNegative: 'Cancel',\n           }}\n         />\n       )}\n+\n+      {!visible && (\n+        <Image\n+          style={{ width: '100%', height: 500 }}\n+          source={null}\n+        />\n+      )}\n       <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>\n         {visible && (\n           <TouchableOpacity onPress={takePicture} style={styles.capture}>\n             <Text style={{ fontSize: 14 }}> SNAP </Text>\n"
+                },
+                {
+                    "date": 1645344972488,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,13 +4,15 @@\n \n const CameraView = (props) => {\n   const [visible, setVisible] = useState(false);\n   const camera = useRef(null);\n+\n   const takePicture = async () => {\n     if (camera) {\n-      const options = { quality: 0.5, base64: true };\n-      const data = await camera.takePictureAsync(options);\n-      console.log(data.uri);\n+      // const options = { quality: 0.5, base64: true };\n+      // const data = await camera.takePictureAsync(options);\n+      // console.log(data.uri);\n+      alert('in here')\n     }\n \n     setVisible(false)\n   };\n"
+                },
+                {
+                    "date": 1645345082180,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,12 +7,21 @@\n   const camera = useRef(null);\n \n   const takePicture = async () => {\n     if (camera) {\n-      // const options = { quality: 0.5, base64: true };\n+      const options = { quality: 0.5, base64: true };\n       // const data = await camera.takePictureAsync(options);\n       // console.log(data.uri);\n-      alert('in here')\n+\n+      camera.current\n+        .takePictureAsyncoptions()\n+        .then(result => {\n+          alert(result)\n+        }).catch(error => {\n+          alert('Error')\n+        })\n+\n+\n     }\n \n     setVisible(false)\n   };\n"
+                },
+                {
+                    "date": 1645345157596,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,10 +11,9 @@\n       const options = { quality: 0.5, base64: true };\n       // const data = await camera.takePictureAsync(options);\n       // console.log(data.uri);\n \n-      camera.current\n-        .takePictureAsyncoptions()\n+      camera.takePictureAsyncoptions()\n         .then(result => {\n           alert(result)\n         }).catch(error => {\n           alert('Error')\n"
+                },
+                {
+                    "date": 1645345184321,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n       const options = { quality: 0.5, base64: true };\n       // const data = await camera.takePictureAsync(options);\n       // console.log(data.uri);\n \n-      camera.takePictureAsyncoptions()\n+      camera.takePictureAsync(options)\n         .then(result => {\n           alert(result)\n         }).catch(error => {\n           alert('Error')\n"
+                },
+                {
+                    "date": 1645345206835,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n       const options = { quality: 0.5, base64: true };\n       // const data = await camera.takePictureAsync(options);\n       // console.log(data.uri);\n \n-      camera.takePictureAsync(options)\n+      camera.current.takePictureAsync(options)\n         .then(result => {\n           alert(result)\n         }).catch(error => {\n           alert('Error')\n"
+                },
+                {
+                    "date": 1645345233274,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,19 +8,10 @@\n \n   const takePicture = async () => {\n     if (camera) {\n       const options = { quality: 0.5, base64: true };\n-      // const data = await camera.takePictureAsync(options);\n-      // console.log(data.uri);\n-\n-      camera.current.takePictureAsync(options)\n-        .then(result => {\n-          alert(result)\n-        }).catch(error => {\n-          alert('Error')\n-        })\n-\n-\n+      const data = await camera.current.takePictureAsync(options);\n+      console.log(data.uri);\n     }\n \n     setVisible(false)\n   };\n"
+                },
+                {
+                    "date": 1645345274377,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n import { RNCamera } from 'react-native-camera';\n \n const CameraView = (props) => {\n   const [visible, setVisible] = useState(false);\n+  const [uri, setUri] = useState(null)\n   const camera = useRef(null);\n \n   const takePicture = async () => {\n     if (camera) {\n@@ -41,9 +42,9 @@\n \n       {!visible && (\n         <Image\n           style={{ width: '100%', height: 500 }}\n-          source={null}\n+          source={uri}\n         />\n       )}\n       <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>\n         {visible && (\n"
+                },
+                {
+                    "date": 1645345288275,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,8 +10,9 @@\n   const takePicture = async () => {\n     if (camera) {\n       const options = { quality: 0.5, base64: true };\n       const data = await camera.current.takePictureAsync(options);\n+      setUri(data.uri);\n       console.log(data.uri);\n     }\n \n     setVisible(false)\n"
+                },
+                {
+                    "date": 1645345316726,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,9 +43,9 @@\n \n       {!visible && (\n         <Image\n           style={{ width: '100%', height: 500 }}\n-          source={uri}\n+          source={{uri: uri}}\n         />\n       )}\n       <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>\n         {visible && (\n"
+                },
+                {
+                    "date": 1645345337544,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n       {visible && (\n         <RNCamera\n           ref={camera}\n           style={styles.preview}\n-          type={RNCamera.Constants.Type.back}\n+          type={RNCamera.Constants.Type.front}\n           flashMode={RNCamera.Constants.FlashMode.off}\n           androidCameraPermissionOptions={{\n             title: 'Permission to use camera',\n             message: 'We need your permission to use your camera',\n"
+                },
+                {
+                    "date": 1645345542950,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n       {visible && (\n         <RNCamera\n           ref={camera}\n           style={styles.preview}\n-          type={RNCamera.Constants.Type.front}\n+          type={RNCamera.Constants.Type.back}\n           flashMode={RNCamera.Constants.FlashMode.off}\n           androidCameraPermissionOptions={{\n             title: 'Permission to use camera',\n             message: 'We need your permission to use your camera',\n"
+                },
+                {
+                    "date": 1645345715916,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n       {visible && (\n         <RNCamera\n           ref={camera}\n           style={styles.preview}\n-          type={RNCamera.Constants.Type.back}\n+          type={RNCamera.Constants.Type.front}\n           flashMode={RNCamera.Constants.FlashMode.off}\n           androidCameraPermissionOptions={{\n             title: 'Permission to use camera',\n             message: 'We need your permission to use your camera',\n"
+                },
+                {
+                    "date": 1645345876583,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,8 +4,9 @@\n \n const CameraView = (props) => {\n   const [visible, setVisible] = useState(false);\n   const [uri, setUri] = useState(null)\n+  const [cameraType, setCameraType] = useState(RNCamera.Constants.Type.back)\n   const camera = useRef(null);\n \n   const takePicture = async () => {\n     if (camera) {\n@@ -17,8 +18,15 @@\n \n     setVisible(false)\n   };\n \n+  const setUpCameraType = () => {\n+    if(cameraType == RNCamera.Constants.Type.back) \n+      setCameraType(RNCamera.Constants.Type.front)\n+    else\n+    setCameraType(RNCamera.Constants.Type.back)\n+  }\n+\n   return (\n     <View style={styles.container}>\n       {visible && (\n         <RNCamera\n@@ -53,8 +61,14 @@\n             <Text style={{ fontSize: 14 }}> SNAP </Text>\n           </TouchableOpacity>\n         )}\n \n+        {visible && (\n+          <TouchableOpacity onPress={setUpCameraType} style={styles.capture}>\n+            <Text style={{ fontSize: 14 }}> Change camera type </Text>\n+          </TouchableOpacity>\n+        )}\n+\n         {!visible && (\n           <TouchableOpacity onPress={() => setVisible(true)} style={styles.capture}>\n             <Text style={{ fontSize: 14 }}> Take a picture </Text>\n           </TouchableOpacity>\n"
+                },
+                {
+                    "date": 1645345903223,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,8 +19,9 @@\n     setVisible(false)\n   };\n \n   const setUpCameraType = () => {\n+    alert('asd')\n     if(cameraType == RNCamera.Constants.Type.back) \n       setCameraType(RNCamera.Constants.Type.front)\n     else\n     setCameraType(RNCamera.Constants.Type.back)\n"
+                },
+                {
+                    "date": 1645345929720,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,10 +19,9 @@\n     setVisible(false)\n   };\n \n   const setUpCameraType = () => {\n-    alert('asd')\n-    if(cameraType == RNCamera.Constants.Type.back) \n+    if(cameraType == RNCamera.Constants.Type.back)\n       setCameraType(RNCamera.Constants.Type.front)\n     else\n     setCameraType(RNCamera.Constants.Type.back)\n   }\n@@ -32,9 +31,9 @@\n       {visible && (\n         <RNCamera\n           ref={camera}\n           style={styles.preview}\n-          type={RNCamera.Constants.Type.front}\n+          type={cameraType}\n           flashMode={RNCamera.Constants.FlashMode.off}\n           androidCameraPermissionOptions={{\n             title: 'Permission to use camera',\n             message: 'We need your permission to use your camera',\n"
+                },
+                {
+                    "date": 1645345978185,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n   const camera = useRef(null);\n \n   const takePicture = async () => {\n     if (camera) {\n-      const options = { quality: 0.5, base64: true };\n+      const options = { quality: 0.5, base64: false };\n       const data = await camera.current.takePictureAsync(options);\n       setUri(data.uri);\n       console.log(data.uri);\n     }\n"
+                },
+                {
+                    "date": 1645345990188,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n   const camera = useRef(null);\n \n   const takePicture = async () => {\n     if (camera) {\n-      const options = { quality: 0.5, base64: false };\n+      const options = { quality: 0.5, base64: true };\n       const data = await camera.current.takePictureAsync(options);\n       setUri(data.uri);\n       console.log(data.uri);\n     }\n"
+                },
+                {
+                    "date": 1645346031870,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n   const takePicture = async () => {\n     if (camera) {\n       const options = { quality: 0.5, base64: true };\n       const data = await camera.current.takePictureAsync(options);\n-      setUri(data.uri);\n+      setUri(data.base64);\n       console.log(data.uri);\n     }\n \n     setVisible(false)\n"
+                },
+                {
+                    "date": 1645346048758,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,10 +11,10 @@\n   const takePicture = async () => {\n     if (camera) {\n       const options = { quality: 0.5, base64: true };\n       const data = await camera.current.takePictureAsync(options);\n-      setUri(data.base64);\n-      console.log(data.uri);\n+      setUri(data.uri);\n+      console.log(data.base64);\n     }\n \n     setVisible(false)\n   };\n"
+                },
+                {
+                    "date": 1645346083371,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n     if (camera) {\n       const options = { quality: 0.5, base64: true };\n       const data = await camera.current.takePictureAsync(options);\n       setUri(data.uri);\n-      console.log(data.base64);\n+      console.log(data.uri);\n     }\n \n     setVisible(false)\n   };\n"
+                },
+                {
+                    "date": 1645346143750,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -73,11 +73,8 @@\n             <Text style={{ fontSize: 14 }}> Take a picture </Text>\n           </TouchableOpacity>\n         )}\n       </View>\n-\n-\n-\n     </View>\n   )\n }\n const styles = StyleSheet.create({\n"
+                }
+            ],
+            "date": 1645344056004,
+            "name": "Commit-0",
+            "content": "import React, { useRef } from \"react\"\nimport { Text, TouchableOpacity, View, StyleSheet } from \"react-native\"\nimport { RNCamera } from 'react-native-camera';\n\nconst CameraView = () => {\n\n  const camera = useRef(null);\n\n  const takePicture = async () => {\n    if (camera) {\n      const options = { quality: 0.5, base64: true };\n      const data = await camera.takePictureAsync(options);\n      console.log(data.uri);\n    }\n  };\n\n  return (\n    <View style={styles.container}>\n      <RNCamera\n        ref={camera}\n        style={styles.preview}\n        type={RNCamera.Constants.Type.back}\n        flashMode={RNCamera.Constants.FlashMode.off}\n        androidCameraPermissionOptions={{\n          title: 'Permission to use camera',\n          message: 'We need your permission to use your camera',\n          buttonPositive: 'Ok',\n          buttonNegative: 'Cancel',\n        }}\n        androidRecordAudioPermissionOptions={{\n          title: 'Permission to use audio recording',\n          message: 'We need your permission to use your audio',\n          buttonPositive: 'Ok',\n          buttonNegative: 'Cancel',\n        }}\n      />\n      <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>\n        <TouchableOpacity onPress={takePicture} style={styles.capture}>\n          <Text style={{ fontSize: 14 }}> SNAP </Text>\n        </TouchableOpacity>\n      </View>\n    </View>\n  )\n}\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    flexDirection: 'column',\n    backgroundColor: 'black',\n  },\n  preview: {\n    flex: 1,\n    justifyContent: 'flex-end',\n    alignItems: 'center',\n  },\n  capture: {\n    flex: 0,\n    backgroundColor: '#fff',\n    borderRadius: 5,\n    padding: 15,\n    paddingHorizontal: 20,\n    alignSelf: 'center',\n    margin: 20,\n  },\n});\nexport default CameraView"
+        }
+    ]
+}

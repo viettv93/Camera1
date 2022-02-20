@@ -1,0 +1,54 @@
+{
+    "sourceFile": "Entry.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 9,
+            "patches": [
+                {
+                    "date": 1645344042117,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1645344073481,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,8 +11,8 @@\n const styles = StyleSheet.create({\r\n   container: {\r\n     flex: 1,\r\n     flexDirection: 'column',\r\n-    backgroundColor: 'black',\r\n+    backgroundColor: 'white',\r\n   },\r\n });\r\n export default Entry\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1645344106101,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,13 @@\n \r\n const Entry = () => {\r\n   return (\r\n     <View style={styles.container}>\r\n-      \r\n+      <TouchableOpacity>\r\n+          <Text>\r\n+              Take a picture\r\n+          </Text>\r\n+      </TouchableOpacity>\r\n     </View>\r\n   )\r\n }\r\n const styles = StyleSheet.create({\r\n"
+                },
+                {
+                    "date": 1645344133117,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n \r\n const Entry = () => {\r\n   return (\r\n     <View style={styles.container}>\r\n-      <TouchableOpacity>\r\n+      <TouchableOpacity style={btnTakePicture}>\r\n           <Text>\r\n               Take a picture\r\n           </Text>\r\n       </TouchableOpacity>\r\n@@ -17,6 +17,10 @@\n     flex: 1,\r\n     flexDirection: 'column',\r\n     backgroundColor: 'white',\r\n   },\r\n+  btnTakePicture: {\r\n+      padding: 30,\r\n+      backgroundColor: 'green'\r\n+  }\r\n });\r\n export default Entry\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1645344141173,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n \r\n const Entry = () => {\r\n   return (\r\n     <View style={styles.container}>\r\n-      <TouchableOpacity style={btnTakePicture}>\r\n+      <TouchableOpacity style={styles.btnTakePicture}>\r\n           <Text>\r\n               Take a picture\r\n           </Text>\r\n       </TouchableOpacity>\r\n"
+                },
+                {
+                    "date": 1645344166859,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,8 +16,9 @@\n   container: {\r\n     flex: 1,\r\n     flexDirection: 'column',\r\n     backgroundColor: 'white',\r\n+    alignItems: 'center', justifyContent: 'center'\r\n   },\r\n   btnTakePicture: {\r\n       padding: 30,\r\n       backgroundColor: 'green'\r\n"
+                },
+                {
+                    "date": 1645344198359,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,7 @@\n import React, { useRef } from \"react\"\r\n import { Text, TouchableOpacity, View, StyleSheet } from \"react-native\"\r\n+import CameraView from \"./CameraView\";\r\n \r\n const Entry = () => {\r\n   return (\r\n     <View style={styles.container}>\r\n@@ -8,17 +9,19 @@\n           <Text>\r\n               Take a picture\r\n           </Text>\r\n       </TouchableOpacity>\r\n+      <CameraView />\r\n     </View>\r\n   )\r\n }\r\n const styles = StyleSheet.create({\r\n   container: {\r\n     flex: 1,\r\n     flexDirection: 'column',\r\n     backgroundColor: 'white',\r\n-    alignItems: 'center', justifyContent: 'center'\r\n+    alignItems: 'center', \r\n+    justifyContent: 'center'\r\n   },\r\n   btnTakePicture: {\r\n       padding: 30,\r\n       backgroundColor: 'green'\r\n"
+                },
+                {
+                    "date": 1645344390665,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,29 +2,35 @@\n import { Text, TouchableOpacity, View, StyleSheet } from \"react-native\"\r\n import CameraView from \"./CameraView\";\r\n \r\n const Entry = () => {\r\n-  return (\r\n-    <View style={styles.container}>\r\n-      <TouchableOpacity style={styles.btnTakePicture}>\r\n-          <Text>\r\n-              Take a picture\r\n-          </Text>\r\n-      </TouchableOpacity>\r\n-      <CameraView />\r\n-    </View>\r\n-  )\r\n+    return (\r\n+        <View style={styles.container}>\r\n+            <TouchableOpacity style={styles.btnTakePicture}>\r\n+                <Text>\r\n+                    Take a picture\r\n+                </Text>\r\n+            </TouchableOpacity>\r\n+            <CameraView\r\n+                onShow={() => {\r\n+\r\n+                }}\r\n+                onHide={() => {\r\n+\r\n+                }} />\r\n+        </View>\r\n+    )\r\n }\r\n const styles = StyleSheet.create({\r\n-  container: {\r\n-    flex: 1,\r\n-    flexDirection: 'column',\r\n-    backgroundColor: 'white',\r\n-    alignItems: 'center', \r\n-    justifyContent: 'center'\r\n-  },\r\n-  btnTakePicture: {\r\n-      padding: 30,\r\n-      backgroundColor: 'green'\r\n-  }\r\n+    container: {\r\n+        flex: 1,\r\n+        flexDirection: 'column',\r\n+        backgroundColor: 'white',\r\n+        alignItems: 'center',\r\n+        justifyContent: 'center'\r\n+    },\r\n+    btnTakePicture: {\r\n+        padding: 30,\r\n+        backgroundColor: 'green'\r\n+    }\r\n });\r\n export default Entry\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1645344462952,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,15 +9,9 @@\n                 <Text>\r\n                     Take a picture\r\n                 </Text>\r\n             </TouchableOpacity>\r\n-            <CameraView\r\n-                onShow={() => {\r\n-\r\n-                }}\r\n-                onHide={() => {\r\n-\r\n-                }} />\r\n+            <CameraView />\r\n         </View>\r\n     )\r\n }\r\n const styles = StyleSheet.create({\r\n"
+                },
+                {
+                    "date": 1645344708453,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,9 @@\n                 <Text>\r\n                     Take a picture\r\n                 </Text>\r\n             </TouchableOpacity>\r\n-            <CameraView />\r\n+            < />\r\n         </View>\r\n     )\r\n }\r\n const styles = StyleSheet.create({\r\n"
+                }
+            ],
+            "date": 1645344042117,
+            "name": "Commit-0",
+            "content": "import React, { useRef } from \"react\"\r\nimport { Text, TouchableOpacity, View, StyleSheet } from \"react-native\"\r\n\r\nconst Entry = () => {\r\n  return (\r\n    <View style={styles.container}>\r\n      \r\n    </View>\r\n  )\r\n}\r\nconst styles = StyleSheet.create({\r\n  container: {\r\n    flex: 1,\r\n    flexDirection: 'column',\r\n    backgroundColor: 'black',\r\n  },\r\n});\r\nexport default Entry"
+        }
+    ]
+}

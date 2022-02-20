@@ -1,0 +1,54 @@
+{
+    "sourceFile": "App.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 9,
+            "patches": [
+                {
+                    "date": 1645342828574,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1645342841370,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n import { View } from \"react-native\"\n \n const App=()=>{\n   return(\n-<View style={{flex: 1}}>\n+<View style={{flex: 1, backgroundColor: 'yellow'}}>\n \n </View>\n   )\n }\n"
+                },
+                {
+                    "date": 1645343395173,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,13 @@\n import React from \"react\"\n-import { View } from \"react-native\"\n+import { Text, TouchableOpacity, View } from \"react-native\"\n \n const App=()=>{\n   return(\n-<View style={{flex: 1, backgroundColor: 'yellow'}}>\n-\n+<View style={{flex: 1, backgroundColor: 'yellow', alignItems: 'center', justifyContent: 'center'}}>\n+ <TouchableOpacity >\n+   <Text>chup anh</Text>\n+ </TouchableOpacity>\n </View>\n   )\n }\n export default App\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1645343477301,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,66 @@\n import React from \"react\"\n import { Text, TouchableOpacity, View } from \"react-native\"\n \n-const App=()=>{\n-  return(\n-<View style={{flex: 1, backgroundColor: 'yellow', alignItems: 'center', justifyContent: 'center'}}>\n- <TouchableOpacity >\n-   <Text>chup anh</Text>\n- </TouchableOpacity>\n-</View>\n+const App = () => {\n+  const takePicture = async () => {\n+    if (this.camera) {\n\\ No newline at end of file\n+      const options = { quality: 0.5, base64: true };\n+      const data = await this.camera.takePictureAsync(options);\n+      console.log(data.uri);\n+    }\n+  };\n+\n+  return (\n+    <View style={styles.container}>\n+      <RNCamera\n+        ref={ref => {\n+          this.camera = ref;\n+        }}\n+        style={styles.preview}\n+        type={RNCamera.Constants.Type.back}\n+        flashMode={RNCamera.Constants.FlashMode.on}\n+        androidCameraPermissionOptions={{\n+          title: 'Permission to use camera',\n+          message: 'We need your permission to use your camera',\n+          buttonPositive: 'Ok',\n+          buttonNegative: 'Cancel',\n+        }}\n+        androidRecordAudioPermissionOptions={{\n+          title: 'Permission to use audio recording',\n+          message: 'We need your permission to use your audio',\n+          buttonPositive: 'Ok',\n+          buttonNegative: 'Cancel',\n+        }}\n+        onGoogleVisionBarcodesDetected={({ barcodes }) => {\n+          console.log(barcodes);\n+        }}\n+      />\n+      <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>\n+        <TouchableOpacity onPress={this.takePicture.bind(this)} style={styles.capture}>\n+          <Text style={{ fontSize: 14 }}> SNAP </Text>\n+        </TouchableOpacity>\n+      </View>\n+    </View>\n   )\n }\n-export default App\n+const styles = StyleSheet.create({\n+  container: {\n+    flex: 1,\n+    flexDirection: 'column',\n+    backgroundColor: 'black',\n+  },\n+  preview: {\n+    flex: 1,\n+    justifyContent: 'flex-end',\n+    alignItems: 'center',\n+  },\n+  capture: {\n+    flex: 0,\n+    backgroundColor: '#fff',\n+    borderRadius: 5,\n+    padding: 15,\n+    paddingHorizontal: 20,\n+    alignSelf: 'center',\n+    margin: 20,\n+  },\n+});\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1645343484331,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n import React from \"react\"\n-import { Text, TouchableOpacity, View } from \"react-native\"\n+import { Text, TouchableOpacity, View, StyleSheet } from \"react-native\"\n \n const App = () => {\n   const takePicture = async () => {\n     if (this.camera) {\n"
+                },
+                {
+                    "date": 1645343581166,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,12 @@\n-import React from \"react\"\n+import React, { useRef } from \"react\"\n import { Text, TouchableOpacity, View, StyleSheet } from \"react-native\"\n \n const App = () => {\n+\n+  const camera = useRef(null);\n+\n+\n   const takePicture = async () => {\n     if (this.camera) {\n       const options = { quality: 0.5, base64: true };\n       const data = await this.camera.takePictureAsync(options);\n@@ -13,9 +17,9 @@\n   return (\n     <View style={styles.container}>\n       <RNCamera\n         ref={ref => {\n-          this.camera = ref;\n+          camera = ref;\n         }}\n         style={styles.preview}\n         type={RNCamera.Constants.Type.back}\n         flashMode={RNCamera.Constants.FlashMode.on}\n@@ -35,9 +39,9 @@\n           console.log(barcodes);\n         }}\n       />\n       <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>\n-        <TouchableOpacity onPress={this.takePicture.bind(this)} style={styles.capture}>\n+        <TouchableOpacity onPress={takePicture} style={styles.capture}>\n           <Text style={{ fontSize: 14 }}> SNAP </Text>\n         </TouchableOpacity>\n       </View>\n     </View>\n@@ -62,5 +66,6 @@\n     paddingHorizontal: 20,\n     alignSelf: 'center',\n     margin: 20,\n   },\n-});\n\\ No newline at end of file\n+});\n+export default App\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1645343593995,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,7 @@\n import React, { useRef } from \"react\"\n import { Text, TouchableOpacity, View, StyleSheet } from \"react-native\"\n+import { RNCamera } from 'react-native-camera';\n \n const App = () => {\n \n   const camera = useRef(null);\n"
+                },
+                {
+                    "date": 1645343723285,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,11 +7,11 @@\n   const camera = useRef(null);\n \n \n   const takePicture = async () => {\n-    if (this.camera) {\n+    if (camera) {\n       const options = { quality: 0.5, base64: true };\n-      const data = await this.camera.takePictureAsync(options);\n+      const data = await camera.takePictureAsync(options);\n       console.log(data.uri);\n     }\n   };\n \n"
+                },
+                {
+                    "date": 1645343789298,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,8 @@\n const App = () => {\n \n   const camera = useRef(null);\n \n-\n   const takePicture = async () => {\n     if (camera) {\n       const options = { quality: 0.5, base64: true };\n       const data = await camera.takePictureAsync(options);\n@@ -17,11 +16,9 @@\n \n   return (\n     <View style={styles.container}>\n       <RNCamera\n-        ref={ref => {\n-          camera = ref;\n-        }}\n+        ref={camera}\n         style={styles.preview}\n         type={RNCamera.Constants.Type.back}\n         flashMode={RNCamera.Constants.FlashMode.on}\n         androidCameraPermissionOptions={{\n"
+                },
+                {
+                    "date": 1645343964974,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n       <RNCamera\n         ref={camera}\n         style={styles.preview}\n         type={RNCamera.Constants.Type.back}\n-        flashMode={RNCamera.Constants.FlashMode.on}\n+        flashMode={RNCamera.Constants.FlashMode.off}\n         androidCameraPermissionOptions={{\n           title: 'Permission to use camera',\n           message: 'We need your permission to use your camera',\n           buttonPositive: 'Ok',\n@@ -32,11 +32,8 @@\n           message: 'We need your permission to use your audio',\n           buttonPositive: 'Ok',\n           buttonNegative: 'Cancel',\n         }}\n-        onGoogleVisionBarcodesDetected={({ barcodes }) => {\n-          console.log(barcodes);\n-        }}\n       />\n       <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>\n         <TouchableOpacity onPress={takePicture} style={styles.capture}>\n           <Text style={{ fontSize: 14 }}> SNAP </Text>\n"
+                }
+            ],
+            "date": 1645342828574,
+            "name": "Commit-0",
+            "content": "import React from \"react\"\nimport { View } from \"react-native\"\n\nconst App=()=>{\n  return(\n<View style={{flex: 1}}>\n\n</View>\n  )\n}\nexport default App"
+        }
+    ]
+}
